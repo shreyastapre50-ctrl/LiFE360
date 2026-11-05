@@ -109,6 +109,8 @@ dependencies {
     )
     implementation("io.ktor:ktor-client-android:3.0.3")
 
+    implementation("io.github.jan-tennert.supabase:functions-kt")
+
     // Testing dependencies
     testImplementation(libs.junit)
 

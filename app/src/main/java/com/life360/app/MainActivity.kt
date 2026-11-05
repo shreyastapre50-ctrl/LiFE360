@@ -2,6 +2,7 @@
 package com.life360.app
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -32,6 +33,7 @@ import androidx.core.content.ContextCompat
 import com.life360.app.ui.theme.LiFE360CopyTheme
 
 import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.handleDeeplinks
 import io.github.jan.supabase.auth.status.SessionStatus
 
 import kotlinx.coroutines.delay
@@ -41,10 +43,17 @@ import java.time.Instant
 import java.util.Locale
 
 
+// ---------------------------------------------------------
+// MAIN ACTIVITY WITH SUPABASE DEEP-LINK HANDLING
+// ---------------------------------------------------------
+
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Handle Supabase email confirmation deep links
+        supabase.handleDeeplinks(intent)
 
         enableEdgeToEdge()
 
@@ -53,6 +62,14 @@ class MainActivity : ComponentActivity() {
                 LiFE360App()
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+
+        // Handle confirmation links when the app is already open
+        supabase.handleDeeplinks(intent)
     }
 }
 
@@ -453,7 +470,7 @@ fun TransportationDashboard() {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // NEW: AI Sustainability Assistant button
+                // AI Sustainability Assistant button
                 OutlinedButton(
                     onClick = {
                         showChatbot = true

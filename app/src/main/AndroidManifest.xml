@@ -32,9 +32,22 @@
             android:theme="@style/Theme.LiFE360Copy"
             android:windowSoftInputMode="adjustResize">
 
+            <!-- Normal app launcher -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Supabase email confirmation deep link -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="com.life360.app"
+                    android:host="login-callback" />
             </intent-filter>
 
         </activity>
